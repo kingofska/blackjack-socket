@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="blackJack">
+<head>
+    <meta charset="UTF-8">
+    <script src="/socket.io.js" type="text/javascript"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+    <script src="/angular-animate.js"></script>
+    <script src="/socket.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="cards.css"/>
+
+    <title>BlackJack demo task</title>
+</head>
+<body ng-controller="GameCtrl">
+
+<div class="container" ng-cloak>
+    <div class="row">
+        <h1>Welcome to BlackJack demo</h1>
+    </div>
+
+    <div class="row">
+        <h2>Dealer</h2>
+        <div class="col-md-3 total">
+            <div class="row">
+                Score: {{data.dealerData.total}}
+            </div>
+                <div class="row busted" ng-show="data.dealerData.state == 'BUSTED'">BUSTED</div>
+                <div class="row" ng-show="data.dealerData.state == 'BLACKJACK'">BLACKJACK</div>
+            </div>
+            <div class="hand col-md-9">
+                <div ng-repeat="card in data.dealerData.cards" class="card {{card.suit}} animate-repeat">
+                    <p>{{card.value}}</p>
+                </div>
+            </div>
+    </div>
+    <div class="row">
+            <h2>{{data.playerData.name}}</h2>
+
+            <div class="col-md-3 total">
+                <div class="row">Score: {{data.playerData.total}}</div>
+                <div class="row busted" ng-show="data.playerData.state == 'BUSTED'">BUSTED</div>
+                <div class="row" ng-show="data.playerData.state.state == 'BLACKJACK'">BLACKJACK</div>
+            </div>
+            <div class="col-md-9 hand spread">
+                <div ng-repeat="card in data.playerData.cards"  class="card {{card.suit}} animate-repeat">
+                    <p>{{card.value}}</p>
+                </div>
+            </div>
+    </div>
+    <div class="row">
+        <h2 ng-hide="!data.winner">Winner: {{ data.winner }}</h2>
+    </div>
+    <div class="row">
+        <form>
+            <button ng-click="deal()" ng-disabled="data.isGameActive" class="btn btn-default">Deal cards</button>
+            <button ng-click="hit()"  ng-disabled="!data.isActive" class="btn btn-default">Hit a card</button>
+            <button ng-click="stand()"  ng-disabled="!data.isActive" class="btn btn-default">Stand</button>
+        </form>
+    </div>
+    <div class="row">
+        <h2>Other Players</h2>
+        <div class="row" ng-repeat="player in data.otherPlayers">
+            <div class="col-md-3"><h3>{{player.name}}</h3></div><div class="col-md-3">{{player.total}}</div>
+            <div class="hand small col-md-6">
+                <div ng-repeat="card in player.cards" class="card {{card.suit}} animate-repeat">
+                    <p>{{card.value}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/client.js"></script>
+</html>
