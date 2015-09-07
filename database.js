@@ -1,7 +1,6 @@
 var Mongoose = require('mongoose');
 
-//Mongoose.connect(process.env.MONGODB_URL);
-Mongoose.connect("mongodb://cardgame:cardgame123123!@ds035663.mongolab.com:35663/heroku_8q7mxq9p");
+Mongoose.connect(process.env.MONGODB_URL);
 
 var db = Mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
