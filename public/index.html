@@ -50,11 +50,12 @@
             </div>
     </div>
     <div class="row">
-        <h2 ng-hide="!data.winner">Winner: {{ data.winner }}</h2>
+        <h2 ng-hide="!data.winner">Winners:</h2>
+        <div class="row" ng-repeat="winner in data.winner"><div class="col-md-12">{{winner.name}} {{winner.total}}</div></div>
     </div>
     <div class="row">
         <form>
-            <button ng-click="deal()" ng-disabled="data.isGameActive" class="btn btn-default">Deal cards</button>
+            <button ng-click="deal()" ng-disabled="isGameActive" class="btn btn-default">Deal cards</button>
             <button ng-click="hit()"  ng-disabled="!data.isActive" class="btn btn-default">Hit a card</button>
             <button ng-click="stand()"  ng-disabled="!data.isActive" class="btn btn-default">Stand</button>
         </form>

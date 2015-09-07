@@ -17,6 +17,11 @@ function Socket(server) {
         sendToPlayer: function (playerName, message) {
             io.to(playerName).emit("message",message);
         },
+
+        /**
+         * Send a message to all connected users
+         * @param message
+         */
         broadcast: function(message){
             io.sockets.emit("message",message);
         }

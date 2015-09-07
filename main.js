@@ -41,6 +41,7 @@ server.route({
  */
 server.route({
     method: 'GET',
+    config: { auth: 'token' },
     path: '/player/{name}/cards',
     handler: function (request, reply) {
         var playerName = request.params.name;
@@ -59,6 +60,7 @@ server.route({
  */
 server.route({
     method: 'GET',
+    config: { auth: 'token' },
     path: '/player/{name}/hit',
     handler: function (request, reply) {
         var playerName = request.params.name;
@@ -81,6 +83,7 @@ server.route({
  */
 server.route({
     method: 'GET',
+    config: { auth: 'token' },
     path: '/player/{name}/stand',
     handler: function (request, reply) {
         var playerName = request.params.name;

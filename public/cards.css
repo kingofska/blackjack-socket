@@ -117,3 +117,10 @@ div[class*='suit']:after {
   text-align: center;
   font: 50px/100px Georgia, serif;
 }
+
+.stroke {
+  background-color: #F00;
+  height: 5px;
+  position: relative;
+  top: 50px;
+}

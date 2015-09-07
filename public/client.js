@@ -17,10 +17,15 @@
         $http.get('/player')
         .success(function(json) {
             $scope.playerName = json.playerData.name;
-            $scope.isGameActive = true;
             $scope.otherPlayers = {};
 
             angular.merge($scope.data, json);
+
+            $scope.httpConfig =  {
+                headers: {
+                    'Authorization': 'Bearer ' + $scope.data.playerData.token
+                }
+            };
 
             socket = new socket();
 
@@ -46,33 +51,35 @@
         });
 
         $scope.deal = function(){
-            $http.get('/player/' + $scope.playerName + '/cards')
-                .success(function(json) {
-                    $scope.isGameActive = true;
-                    angular.merge($scope.data, json);
-                });
+            if($scope.data && $scope.data.dealerData){
+                $scope.data.winner = "";
+
+                $scope.data.dealerData.cards = [];
+                $scope.data.dealerData.total = 0;
+
+                $scope.data.playerData.cards = [];
+                $scope.data.playerData.cards = 0;
+            }
+
+            $http.get('/player/' + $scope.playerName + '/cards', $scope.httpConfig)
+            .success(function(json) {
+                $scope.isGameActive = true;
+                angular.merge($scope.data, json);
+            });
 
         };
 
         $scope.hit = function(){
-            $http.get('/player/' + $scope.playerName + '/hit')
+            $http.get('/player/' + $scope.playerName + '/hit', $scope.httpConfig)
             .success(function(json) {
-                    angular.merge($scope.data, json);
+                angular.merge($scope.data, json);
             });
         };
 
         $scope.stand = function(){
-            $http.get('/player/' + $scope.playerName + '/stand')
+            $http.get('/player/' + $scope.playerName + '/stand', $scope.httpConfig)
             .success(function(json) {
                 //wait for ws message with winner
-            });
-        };
-
-        $scope.reset = function(){
-            $http.get('/player')
-                .success(function(json) {
-                    $scope.playerName=  json.playerData.name;
-                    angular.merge($scope.data, json);
             });
         };
 

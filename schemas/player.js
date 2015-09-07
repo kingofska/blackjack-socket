@@ -5,6 +5,7 @@ var playerSchema = new mongoose.Schema({
     name: String,
     cards: Array,
     total: Number,
+    token: String,
     lastDealTime: Date
 });
 
